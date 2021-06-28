@@ -77,12 +77,12 @@ fun simpleCounter() {
 
 @Composable
 fun piece(x: Int, y: Int, col: org.jetbrains.compose.common.core.graphics.Color?) {
-    val boxSize = 40.dp
+    val boxSize = 20.dp
     val offSet = 1.1f
     Box(
         Modifier
             .size(boxSize, boxSize)
-            .position(Dp(boxSize.value * x * offSet + 30), Dp(boxSize.value * y * offSet + 160))
+            .position(Dp(boxSize.value * x * offSet + 30), Dp(boxSize.value * y * offSet + 200))
             .background(col!!)
             .padding(3.dp)
     ) {}
@@ -105,5 +105,6 @@ fun main() {
         mainContainer("Hello, this is extracted from a style-sheet object")
         simpleCounter()
         gameOfLife()
+
     }
 }

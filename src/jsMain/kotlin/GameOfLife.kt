@@ -1,6 +1,4 @@
 import androidx.compose.runtime.*
-import org.jetbrains.compose.web.css.padding
-import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.*
 
 val colors = mapOf<String, org.jetbrains.compose.common.core.graphics.Color>(
@@ -11,21 +9,30 @@ val colors = mapOf<String, org.jetbrains.compose.common.core.graphics.Color>(
 
 @Composable
 fun gameOfLife() {
-    val mySim = Simulation(5, 5)
+    val mySim = Simulation(20, 20)
 
-    mySim.setAlive(2, 1)
-    mySim.setAlive(2, 2)
-    mySim.setAlive(2, 3)
+    mySim.randomBoard()
 
+    val simArray = arrayOfNulls<Simulation>(10)
+    for (i in simArray.indices) {
+        mySim.step()
+        simArray[i] = mySim
+    }
+
+    var simulation: Simulation by mutableStateOf(mySim)
+    var count: Int by mutableStateOf(0)
     Div() {
-        var simulation: Simulation by mutableStateOf(mySim)
-        Button(attrs = { onClick {simulation.step()} }) {
+        Button(attrs = {
+            onClick {
+                simulation.step()
+                count++
+            }
+        }) {
             Text("Evolve")
         }
-        for (i in 0 until 10) {
-            Br()
-            mySim.step()
-            mySim.printConsoleBoard()
-        }
+        Br()
+        Text("Generation: $count")
+        Br()
+        simulation.printBoard()
     }
 }

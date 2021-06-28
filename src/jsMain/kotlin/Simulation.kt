@@ -8,6 +8,17 @@ import org.jetbrains.compose.web.dom.Text
 class Simulation(var width: Int, var height: Int) {
     var board: Array<IntArray>
 
+    fun randomBoard() {
+        for (i in 0 until height) {
+            for (j in 0 until width) {
+                val state = arrayOf(0, 1).random()
+                if (state == 1) {
+                    setAlive(j, i)
+                }
+            }
+        }
+    }
+
     @Composable
     fun printBoard() {
         for (i in 0 until height) {
@@ -22,7 +33,7 @@ class Simulation(var width: Int, var height: Int) {
     }
 
     @Composable
-    fun printConsoleBoard() {
+    fun printWebBoard() {
         for (i in 0 until height) {
             Text("${board[i]}")
             Br()
