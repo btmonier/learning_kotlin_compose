@@ -13,12 +13,6 @@ fun gameOfLife() {
 
     mySim.randomBoard()
 
-    val simArray = arrayOfNulls<Simulation>(10)
-    for (i in simArray.indices) {
-        mySim.step()
-        simArray[i] = mySim
-    }
-
     var simulation: Simulation by mutableStateOf(mySim)
     var count: Int by mutableStateOf(0)
     Div() {

@@ -1,7 +1,5 @@
 import androidx.compose.runtime.Composable
-import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.dom.Br
-import org.jetbrains.compose.web.dom.ElementBuilder.Companion.Br
 import org.jetbrains.compose.web.dom.Text
 
 
@@ -48,7 +46,6 @@ class Simulation(var width: Int, var height: Int) {
         board[x][y] = 0
     }
 
-
     fun countAliveNeighbours(x: Int, y: Int): Int {
         var count = 0
         count += getState(x - 1, y - 1)
@@ -70,7 +67,6 @@ class Simulation(var width: Int, var height: Int) {
             0
         } else board[x][y]
     }
-
 
     fun step() {
         val newBoard = Array(width) { IntArray(height) }

@@ -37,8 +37,6 @@ object MyStyleSheet: StyleSheet() {
     }
 }
 
-
-
 @Composable
 fun mainContainer(input: String) {
     Div(attrs = {
@@ -73,8 +71,6 @@ fun simpleCounter() {
     }
 }
 
-
-
 @Composable
 fun piece(x: Int, y: Int, col: org.jetbrains.compose.common.core.graphics.Color?) {
     val boxSize = 20.dp
@@ -97,14 +93,11 @@ fun Modifier.position(width: Dp, height: Dp): Modifier  = castOrCreate().apply {
     }
 }
 
-
-
 fun main() {
     renderComposable(rootElementId = "root") {
         Style(MyStyleSheet)
         mainContainer("Hello, this is extracted from a style-sheet object")
         simpleCounter()
         gameOfLife()
-
     }
 }
