@@ -1,19 +1,13 @@
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import org.jetbrains.compose.common.foundation.layout.*
-import org.jetbrains.compose.common.internal.castOrCreate
-import org.jetbrains.compose.common.ui.Modifier
-import org.jetbrains.compose.common.ui.background
-import org.jetbrains.compose.common.ui.padding
-import org.jetbrains.compose.common.ui.size
-import org.jetbrains.compose.common.ui.unit.Dp
-import org.jetbrains.compose.common.ui.unit.dp
+import kotlinx.browser.document
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
+import org.w3c.dom.CanvasRenderingContext2D
+import org.w3c.dom.HTMLCanvasElement
 
+val canvas = document.getElementById("myCanvas") as HTMLCanvasElement
+val ctx = canvas.getContext("2d") as CanvasRenderingContext2D
 
 object MyStyleSheet: StyleSheet() {
     val mainContainer by style {
@@ -24,16 +18,9 @@ object MyStyleSheet: StyleSheet() {
         display(DisplayStyle.Flex)
         justifyContent(JustifyContent.Center)
     }
-
-    val counter by style {
-        padding(25.px)
-        backgroundColor(Color.RGB(227, 228, 250))
-        display(DisplayStyle.Flex)
-        justifyContent(JustifyContent.Center)
-    }
-    val golGrid by style {
-        padding(25.px)
-        backgroundColor(Color.RGB(200, 228, 250))
+    val description by style {
+        padding(5.px)
+        property("font-family", "Arial, Helvetica, sans-serif")
     }
 }
 
@@ -47,57 +34,26 @@ fun mainContainer(input: String) {
 
 }
 
-@Composable
-fun simpleCounter() {
-    var count: Int by mutableStateOf(0)
-    Div({
-        classes(MyStyleSheet.counter)
-    }) {
-        Button(attrs = {
-            onClick { count -= 1 }
-        }) {
-            Text("-")
-        }
-
-        Span({ style { padding(15.px) } }) {
-            Text("$count")
-        }
-
-        Button(attrs = {
-            onClick { count += 1 }
-        }) {
-            Text("+")
-        }
-    }
-}
-
-@Composable
-fun piece(x: Int, y: Int, col: org.jetbrains.compose.common.core.graphics.Color?) {
-    val boxSize = 20.dp
-    val offSet = 1.1f
-    Box(
-        Modifier
-            .size(boxSize, boxSize)
-            .position(Dp(boxSize.value * x * offSet + 30), Dp(boxSize.value * y * offSet + 200))
-            .background(col!!)
-            .padding(3.dp)
-    ) {}
-}
-
-@Composable
-fun Modifier.position(width: Dp, height: Dp): Modifier  = castOrCreate().apply {
-    add {
-        position(Position.Absolute)
-        top(height.value.px)
-        left(width.value.px)
-    }
-}
-
 fun main() {
+    document.createElement("canvas")
     renderComposable(rootElementId = "root") {
         Style(MyStyleSheet)
         mainContainer("Hello, this is extracted from a style-sheet object")
-        simpleCounter()
-        gameOfLife()
+        Div(attrs = {
+            classes(MyStyleSheet.description)
+        }) {
+            H1 {
+                Text("The Game of Life using Kotlin Compose")
+            }
+            P {
+                Text(
+                    """
+                      This is an interpretation of John Conway's 'Game of Life' using Kotlin Compose. 
+                      Click the 'Evolve' button to go up a generation  
+                    """.trimIndent()
+                )
+            }
+        }
+        gameOfLife(50, 50)
     }
 }
