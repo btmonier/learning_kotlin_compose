@@ -1,7 +1,7 @@
 # Compose for the web test
 
 ## Overview
-This is Compose Web project that creates a [game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) 
+This is Compose Web project that creates a [game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 instance amongst other element tests.
 
 ## How to get started
@@ -14,6 +14,6 @@ chmod +x gradlew && ./gradlew jsBrowserRun
 
 ## Todo
 - [ ] Game loop
-- [ ] HTML5 Canvas elements
-- [ ] Better position management with piece data
+- [x] HTML5 Canvas elements
+- [x] Better position management with piece data
 - [ ] Optimize GOL algorithm
