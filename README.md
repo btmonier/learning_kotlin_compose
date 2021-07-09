@@ -16,4 +16,4 @@ chmod +x gradlew && ./gradlew jsBrowserRun
 - [ ] Game loop
 - [x] HTML5 Canvas elements
 - [x] Better position management with piece data
-- [ ] Optimize GOL algorithm
+- [x] Optimize GOL algorithm

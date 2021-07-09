@@ -18,6 +18,18 @@ class Simulation(private var nCol: Int, private var nRow: Int) {
         "dead" to "#caddfc"
     )
 
+    // Data for coordinates of adjacent cell neighbors
+    private val mooreNeighbor = arrayOf(
+        Pair(-1, -1),
+        Pair(0, -1),
+        Pair(1, -1),
+        Pair(-1, 0),
+        Pair(1, 0),
+        Pair(-1, 1),
+        Pair(0, 1),
+        Pair(1, 1)
+    )
+
     fun randomBoard() {
         for (i in 0 until nRow) {
             for (j in 0 until nCol) {
@@ -31,8 +43,8 @@ class Simulation(private var nCol: Int, private var nRow: Int) {
 
     @Composable
     fun printBoard() {
-        ctx.fillStyle = "white";
-        ctx.fillRect(0.0, 0.0, canvas.width.toDouble(), canvas.height.toDouble());
+        ctx.fillStyle = colors["dead"]
+        ctx.fillRect(0.0, 0.0, canvas.width.toDouble(), canvas.height.toDouble())
         for (i in 0 until nRow) {
             for (j in 0 until nCol) {
                 if (getState(j, i) == 1) {
@@ -61,24 +73,20 @@ class Simulation(private var nCol: Int, private var nRow: Int) {
 
     private fun countAliveNeighbours(x: Int, y: Int): Int {
         var count = 0
-        count += getState(x - 1, y - 1)
-        count += getState(x, y - 1)
-        count += getState(x + 1, y - 1)
-        count += getState(x - 1, y)
-        count += getState(x + 1, y)
-        count += getState(x - 1, y + 1)
-        count += getState(x, y + 1)
-        count += getState(x + 1, y + 1)
+
+        mooreNeighbor.forEach {
+            count += getState(x + it.first, y + it.second)
+        }
+
         return count
     }
 
     private fun getState(x: Int, y: Int): Int {
-        if (x < 0 || x >= nCol) {
-            return 0
-        }
-        return if (y < 0 || y >= nRow) {
+        return if (x < 0 || x >= nCol || y < 0 || y >= nRow) {
             0
-        } else board[x][y]
+        }  else {
+            board[x][y]
+        }
     }
 
     fun step() {
@@ -87,12 +95,8 @@ class Simulation(private var nCol: Int, private var nRow: Int) {
             for (x in 0 until nCol) {
                 val aliveNeighbours = countAliveNeighbours(x, y)
                 if (getState(x, y) == 1) {
-                    if (aliveNeighbours < 2) {
-                        newBoard[x][y] = 0
-                    } else if (aliveNeighbours == 2 || aliveNeighbours == 3) {
+                    if (aliveNeighbours == 2 || aliveNeighbours == 3) {
                         newBoard[x][y] = 1
-                    } else if (aliveNeighbours > 3) {
-                        newBoard[x][y] = 0
                     }
                 } else {
                     if (aliveNeighbours == 3) {
@@ -103,5 +107,4 @@ class Simulation(private var nCol: Int, private var nRow: Int) {
         }
         board = newBoard
     }
-
 }
