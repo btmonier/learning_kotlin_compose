@@ -1,5 +1,6 @@
 import androidx.compose.runtime.Composable
 import kotlinx.browser.document
+import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
@@ -35,7 +36,7 @@ fun mainContainer(input: String) {
 }
 
 fun main() {
-    document.createElement("canvas")
+    //document.createElement("canvas")
     renderComposable(rootElementId = "root") {
         Style(MyStyleSheet)
         mainContainer("Hello, this is extracted from a style-sheet object")
@@ -54,6 +55,8 @@ fun main() {
                 )
             }
         }
-        gameOfLife(50, 50)
+//        gameOfLife(75, 75)
+        init()
+        animate()
     }
 }
