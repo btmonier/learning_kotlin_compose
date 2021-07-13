@@ -55,8 +55,8 @@ fun main() {
                 )
             }
         }
-//        gameOfLife(75, 75)
-        init()
-        animate()
+        gameOfLife(150, 150)
+//        init()
+//        animate()
     }
 }
