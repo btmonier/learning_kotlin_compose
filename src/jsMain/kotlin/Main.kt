@@ -6,9 +6,13 @@ import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
+import org.w3c.dom.events.EventListener
+import org.w3c.dom.events.MouseEvent
 
 val canvas = document.getElementById("myCanvas") as HTMLCanvasElement
 val ctx = canvas.getContext("2d") as CanvasRenderingContext2D
+
+
 
 object MyStyleSheet: StyleSheet() {
     val mainContainer by style {
@@ -36,8 +40,17 @@ fun mainContainer(input: String) {
 }
 
 fun main() {
-    //document.createElement("canvas")
+
+    val mouse = Mouse(0, 0, 25)
+    canvas.addEventListener("mousemove", EventListener {
+        val event = it as MouseEvent
+        mouse.x = event.offsetX.toInt()
+        mouse.y = event.offsetY.toInt()
+        println("X: ${mouse.x}\tY: ${mouse.y}")
+    })
+
     renderComposable(rootElementId = "root") {
+
         Style(MyStyleSheet)
         mainContainer("Hello, this is extracted from a style-sheet object")
         Div(attrs = {
@@ -55,8 +68,8 @@ fun main() {
                 )
             }
         }
-        gameOfLife(150, 150)
-//        init()
-//        animate()
+//        gameOfLife(150, 150)
+        init(1500, mouse) // particle animations
+        animate()
     }
 }
