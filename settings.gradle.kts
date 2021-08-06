@@ -4,5 +4,5 @@ pluginManagement {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
-rootProject.name = "compose_web_test"
+rootProject.name = "learning_kotlin_compose"
 
